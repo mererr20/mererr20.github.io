@@ -9,21 +9,20 @@
 </head>
 
 <body>
-   <div style="background-color:black; justify-content:center; display:flex; height:600px; align-items:center;">
+   <div style="background-color:black; justify-content:center; display:flex; height:700px; align-items:center;">
       <div id="container">
          <h1 style="text-align: center; color: white; margin-bottom: 60px;">Camera</h1>
          <video id="player" autoplay></video>
          <button id="capture-button" title="Take a picture"></button>
       </div>
-      <button onclick="open_camera()" id="btn_open_camera" class="btn_open_camera" role="button">Open camera</button>
-      
+      <button onclick="open_camera()" id="btn_open_camera" class="btn_open_camera" role="button">Open camera!</button>
    </div>
    <div id="results">
       <div style="background-color: black; height:100%;width: 50%;">
-         <h1 style="text-align:center;color:white;">Results:</h1>
+         <h1 style="text-align:center;color:white;">Results: </h1>
          <div id="parts_body" style="margin-left:40%; overflow:auto; color:white; background-color:rgb(0, 81, 255);"></div>
       </div>
-      <div style="background-color:black; justify-content:center; display:flex; align-items:center; width:50%; height:460px; flex-direction:column;">
+      <div style="background-color:black; justify-content:center; display:flex; align-items:center; width:50%; height:100%; flex-direction:column;">
          <canvas id="myCanvas" width="560" height="450" style="margin-left:20px">
       </div>
       
