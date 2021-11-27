@@ -1,0 +1,113 @@
+<html>
+
+<head>
+   <!-- Load TensorFlow.js -->
+   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+   <!-- Load Posenet -->
+   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+   <div style="background-color:black; justify-content:center; display:flex; height:600px; align-items:center;">
+      <div id="container">
+         <h1 style="text-align: center; color: white; margin-bottom: 60px;">Camera</h1>
+         <video id="player" autoplay></video>
+         <button id="capture-button" title="Take a picture"></button>
+      </div>
+      <button onclick="open_camera()" id="btn_open_camera" class="btn_open_camera" role="button">Open camera</button>
+      
+   </div>
+   <div id="results">
+      <div style="background-color: black; height:100%;width: 50%;">
+         <h1 style="text-align:center;color:white;">Results Found</h1>
+         <div id="parts_body" style="margin-left:40%; overflow:auto; color:white; background-color:rgb(0, 81, 255);"></div>
+      </div>
+      <div style="background-color:black; justify-content:center; display:flex; align-items:center; width:50%; height:460px; flex-direction:column;">
+         <h1 style="text-align:center; color:white">Result Image</h1>
+         <canvas id="myCanvas" width="560" height="450" style="margin-left:20px">
+      </div>
+      
+   </div>
+   <canvas id="output"></canvas>
+   </canvas>
+</body>
+
+<script>
+   async function test(photo) {
+      var imageElement = new Image();
+      imageElement.src = photo;
+      const imageScaleFactor = 0.50;
+      const flipHorizontal = false;
+      const outputStride = 16;
+      // load the posenet model
+      tf.setBackend('cpu');
+      const net = await posenet.load();
+      const pose = await net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
+      load(pose, photo);
+   }
+   function load(pose, photo) {
+      var image = new Image();
+      image.src = photo;
+
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+
+      let resultsDiv = document.getElementById('results');
+      resultsDiv.style.display = "flex";
+
+      document.getElementById("parts_body").innerHTML = ""; //clean the previous result
+      image.onload = function () {
+         ctx.drawImage(image, 0, 0);
+         ctx.fillStyle = "#FF0000";
+         pose.keypoints.forEach(element => {
+            if (element.score >= 0.6) {
+               ctx.fillRect(element.position.x, element.position.y, 10, 10);
+               document.getElementById("parts_body").innerHTML += `<h3>- ${element.part}</h3>`;
+            }
+         });
+
+      };
+   }
+   function open_camera() {
+      const player = document.getElementById('player');
+      const captureButton = document.getElementById('capture-button');
+      const outputCanvas = document.getElementById('output');
+      const context = outputCanvas.getContext('2d');
+
+      let conta = document.getElementById('container');
+      conta.style.display = "initial";
+      document.getElementById("btn_open_camera").style.display = "none";
+      navigator.mediaDevices.
+         getUserMedia({ video: true }).
+         then(stream => {
+            player.srcObject = stream;
+         }).catch(error => {
+            console.error('Can not get an access to a camera...', error);
+         });
+      captureButton.addEventListener('click', (e) => {
+         // Get the real size of the picture
+         const imageWidth = player.offsetWidth;
+         const imageHeight = player.offsetHeight;
+
+         // Make our hidden canvas the same size
+         outputCanvas.width = imageWidth;
+         outputCanvas.height = imageHeight;
+
+         // Draw captured image to the hidden canvas
+         context.drawImage(player, 0, 0, imageWidth, imageHeight);
+         var photo = outputCanvas.toDataURL(); //Esta es la foto, en base 64
+         // A bit of magic to save the image to a file 
+         console.log(photo);
+
+
+         var img = new Image();
+         img.src = photo;
+
+         test(photo);
+      });
+   }
+</script>
+
+</html>
+

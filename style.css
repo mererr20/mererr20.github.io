@@ -1,0 +1,85 @@
+#container {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    display:none;
+    margin-top: -60px;
+  }
+  #player {
+    width: 500px;
+    border: solid #111;
+    box-shadow: 0 0 50px rgb(0, 81, 255);
+  }
+  #capture-button {
+    display: block;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    bottom: -150px;
+    left: 50%;
+    margin-left: -25px;
+    border-radius: 50%;
+    background-color: #ff0000;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    opacity: 0.5;
+    outline: none;
+  }
+  #capture-button:hover {
+    transform: scale(1.1);
+  }
+  #capture-button:active {
+    background-color: #00ff00;
+  }
+  #output {
+    display: none;
+  }
+  #results{
+    position: relative;
+    display:none;
+    background-color:rgb(65, 99, 99);
+    height:460px;
+    flex-direction: row;
+  }
+  .btn_open_camera {
+    align-items: center;
+    appearance: none;
+    background-color: #FCFCFD;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,rgba(45, 35, 66, 0.3) 0 7px 13px -3px,#D6D6E7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: rgb(0, 81, 255);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono",monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s,transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow,transform;
+    font-size: 18px;
+  }
+  .btn_open_camera:focus {
+    box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  }
+  .btn_open_camera:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    transform: translateY(-2px);
+  }
+  .btn_open_camera:active {
+    box-shadow: #D6D6E7 0 3px 7px inset;
+    transform: translateY(2px);
+  }
